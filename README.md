@@ -5,7 +5,7 @@ project. Supports Player vs Player and Player vs Computer modes, with
 color-coded boards and a persistent leaderboard.
 
 
-<img src="ScreenShot.png" width="700"/>
+<img src="ScreenShot.png" width="500"/>
 
 
 ## Features
