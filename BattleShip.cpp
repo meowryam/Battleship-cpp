@@ -353,7 +353,14 @@ void setrandships(char board[10][10])
             }
         }
     }
+    setColor(13, 0);
     cout << "Ships placed randomly!" << endl;
+    setColor(7, 0);
+    printBoard(board, false);
+    setColor(13, 0);
+    cout << "Press any key to continue...\n";
+    setColor(7, 0);
+    (void)_getch();
     printBoard(board, false);
 }
 
@@ -594,6 +601,7 @@ void vsPlayer(char myboard[10][10], char oppboard[10][10])
         cout << "\n" << player1name << "'s turn" << endl;
         for (int i = 0; i < turns1; i++)
         {
+            clearScreen();
             printBoard(oppboard, true);
             pyr = 2;
             playerattack(oppboard, player1score);
@@ -622,10 +630,10 @@ void vsPlayer(char myboard[10][10], char oppboard[10][10])
         cout << "\n\n                                         Press any key when ready...\n";
         (void)_getch();
         clearScreen();
-
         cout << "\n" << player2name << "'s turn" << endl;
         for (int i = 0; i < turns2; i++)
         {
+            clearScreen();
             printBoard(myboard, true);
             pyr = 1;
             playerattack(myboard, player2score);
@@ -636,6 +644,22 @@ void vsPlayer(char myboard[10][10], char oppboard[10][10])
                 break;
             }
         }
+
+        if (over) break;
+
+        // Pass keyboard back to Player 1
+        clearScreen();
+        setColor(13, 0);
+        cout << "\n\n\n\n\n\n\n\n\n\n";
+        cout << "========================================================================================================================\n\n";
+        setColor(7, 0);
+        cout << "                                         " << player2name << "'s turn is over!\n";
+        cout << "                                      Pass the keyboard to " << player1name << "\n\n";
+        setColor(13, 0);
+        cout << "========================================================================================================================\n\n";
+        cout << "\n\n                                         Press any key when ready...\n";
+        (void)_getch();
+        clearScreen();
     }
 }
 
@@ -784,38 +808,56 @@ void showLeaderboard(const string playerNames[], const int scores[], int totalPl
 // Display result and update leaderboard
 void displayResult(int player1Score, int player2Score)
 {
-    cout << "\n========================================" << endl;
-    cout << "           GAME OVER!                   " << endl;
-    cout << "========================================" << endl;
+    clearScreen();
+    setColor(13, 0);
+    cout << "========================================================================================================================\n";
+    setColor(7, 0);
+    cout << "                                           GAME OVER!                   \n";
+    setColor(13, 0);
+    cout << "========================================================================================================================\n\n";
 
-    cout << "\nFinal Scores:" << endl;
-    cout << player1name << ": " << player1Score << endl;
-    cout << player2name << ": " << player2Score << endl;
+    setColor(7, 0);
+    cout << "  Final Scores:\n\n";
+    setColor(13, 0);
+    cout << "  " << player1name << ": "; setColor(7, 0);
+    cout << player1Score << "\n";
+    setColor(13, 0);
+    cout << "  " << player2name << ": "; setColor(7, 0);
+    cout << player2Score << "\n\n";
+
+    setColor(13, 0);
+    cout << "========================================================================================================================\n\n";
 
     if (player1Score > player2Score)
     {
-        cout << "\n" << player1name << " WINS!" << endl;
-        // Update leaderboard with winner's score
+        setColor(15, 5);
+        cout << "  ** " << player1name << " WINS! **\n";
+        setColor(7, 0);
         updateLeaderboard(leaderboardNames, leaderboardScores, totalPlayersInFile, player1name, player1Score);
     }
     else if (player2Score > player1Score)
     {
-        cout << "\n" << player2name << " WINS!" << endl;
-        // Update leaderboard with winner's score
+        setColor(15, 5);
+        cout << "  ** " << player2name << " WINS! **\n";
+        setColor(7, 0);
         updateLeaderboard(leaderboardNames, leaderboardScores, totalPlayersInFile, player2name, player2Score);
     }
     else
     {
-        cout << "\nIt's a DRAW!" << endl;
-        // Update leaderboard for both in case of draw
+        setColor(7, 0);
+        cout << "  IT'S A DRAW!\n";
         updateLeaderboard(leaderboardNames, leaderboardScores, totalPlayersInFile, player1name, player1Score);
         updateLeaderboard(leaderboardNames, leaderboardScores, totalPlayersInFile, player2name, player2Score);
     }
 
-    // Save updated leaderboard to file
     saveLeaderboard(leaderboardNames, leaderboardScores, totalPlayersInFile);
 
-    cout << "\nLeaderboard has been updated!" << endl;
+    setColor(13, 0);
+    cout << "\n  Leaderboard updated!";
+    cout << "\n\n  Press any key to return to menu...\n";
+    setColor(7, 0);
+    (void)_getch();
+    clearScreen();
 }
 
 // Show game menu
@@ -829,6 +871,7 @@ void showGameMenu()
 
     while (!exitGame)
     {
+        clearScreen();
         setColor(13, 0); // yellow borders
         cout << "\n========================================" << endl;
         setColor(7, 0); // cyan title
@@ -908,7 +951,7 @@ void showGameMenu()
                 cin >> player1name;
                 cout << "Enter Player 2 name: ";
                 cin >> player2name;
-
+                clearScreen();
                 // Player 1 setup
                 cout << "\n=== " << player1name << " SETUP ===" << endl;
                 cout << "How would you like to place your ships?" << endl;
@@ -918,6 +961,7 @@ void showGameMenu()
                 cin >> shipChoice;
 
                 pyr = 1;
+             
                 if (shipChoice == 1)
                 {
                     setManualships(board1);
@@ -928,6 +972,7 @@ void showGameMenu()
                 }
 
                 // Player 2 setup
+                clearScreen();
                 cout << "\n=== " << player2name << " SETUP ===" << endl;
                 cout << "How would you like to place your ships?" << endl;
                 cout << "1. Manual Placement" << endl;
@@ -944,7 +989,7 @@ void showGameMenu()
                 {
                     setrandships(board2);
                 }
-
+                clearScreen();
                 // Start game
                 cout << "\n========================================" << endl;
                 cout << "       LET THE BATTLE BEGIN!            " << endl;
@@ -1084,7 +1129,7 @@ int main()
 }
 
 void printTurnScreen(char board[10][10], bool hide, string turnLabel, int attackNum, int totalAttacks, int playerAlive, int compAlive, int playerScore, int compScore) {
-    clearScreen();
+ 
     setColor(13, 0);
     cout << "==========================================\n"; setColor(7, 0);
     cout << "             BATTLESHIP\n"; setColor(13, 0);
@@ -1122,6 +1167,7 @@ void vsComputer(char playerBoard[10][10], char computerBoard[10][10]) {
     cout << "\nComputer is placing ships...\n";
     setRandomShips(computerBoard);
     setColor(13, 0);
+    clearScreen();
     cout << "Done! Press any key to start.\n";
     (void)_getch();
 
@@ -1134,6 +1180,7 @@ void vsComputer(char playerBoard[10][10], char computerBoard[10][10]) {
         // --- Player's turn ---
         totalAttacks = compshipsalive + 1;
         for (int i = 0; i < totalAttacks; i++) {
+            clearScreen();
             printTurnScreen(computerBoard, true, "YOUR TURN", i + 1, totalAttacks,
                 playershipsalive, compshipsalive, playerscore, compscore);
             result = merayplayerkaattack(computerBoard, playerscore);
@@ -1517,6 +1564,7 @@ void mereplayerkiShips(char board[10][10]) {
         shipsplaced[shipIdx] = true;
         placedCount++;
         cout << shipNames[shipIdx] << " placed!\n";
+        clearScreen();
         printBoard(board, false);
     }
 
