@@ -1,4 +1,4 @@
-# Battleship.cpp 
+# Hoyle Battleship
 
 A console-based Battleship game built in C++ as a programming fundamentals 
 project. Supports Player vs Player and Player vs Computer modes, with 
@@ -31,7 +31,15 @@ color-coded boards and a persistent leaderboard.
 - C++ (console, Windows)
 - Windows.h for colors
 - File I/O for leaderboard persistence
+- 
+## How to Compile
+1. Clone the repo
+2. Open Visual Studio → New Empty C++ Project
+3. Add `BattleShip.cpp` to Source Files
+4. Press `Ctrl + F5` to build and run
+
+> Note: Windows only (uses Windows.h and conio.h)
 
 ## Authors
 - [meowryam](https://github.com/meowryam)
-- [Rayyan]
+- Rayyan Shah
